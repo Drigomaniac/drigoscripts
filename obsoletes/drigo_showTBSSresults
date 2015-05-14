@@ -1,0 +1,18 @@
+#!/bin/bash
+
+for DIR in $( ls -d rando* )
+do
+echo "in directory.... $DIR"
+cd $DIR
+echo "FA 1 is: "
+ fslstats tbss_*FA*_tfce_corrp_tstat1.nii.gz -R
+echo "FA 2is: "
+ fslstats tbss_*FA*_tfce_corrp_tstat2.nii.gz -R
+echo "MD 1 is: "
+ fslstats tbss_*MD*_tfce_corrp_tstat1.nii.gz -R
+echo "MD 2 is:"
+ fslstats tbss_*MD*_tfce_corrp_tstat2.nii.gz -R
+
+cd ..
+done
+#fslview FA/*$1* V1/*$1* & #rrada_ROIs/*$1* rperea_ROIs/*$1*

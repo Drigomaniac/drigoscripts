@@ -1,0 +1,2 @@
+#!/bin/bash
+fslview mean_FA.nii.gz mean_FA_skeleton.nii.gz -l Green tbss*FA*tfce_corrp_tstat$1.nii.gz -b 0.95,1 -l Red-Yellow tbss_*_MD_*_tfce_corrp_tstat$2.nii.gz -b 0.95,1 -l Blue-Lightblue 

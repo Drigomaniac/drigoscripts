@@ -1,0 +1,42 @@
+#!/bin/bash
+
+#Rodrigo Perea
+#rperea@kumc.edu (alternative email grandrigo@gmail.com)
+#this Script was created to change or rename files in a directory at once. 
+#PLEASE MAKE SURE YOU KNOW HOW TO USE IT BEFORE EXECUTE IT 
+#IT COULD MODIFIED YOUR FILES AND THERE IS NO UNDO OF IT!
+pwd=SOURCE
+
+FILENAME=$1
+
+#Checking what you are doing.....
+if  [ $1 = "--help" ] ; then
+
+"To run:
+drigo_echocolro <FILENAME> <#s of rows> <#s of columns> <OUTFILE_FILENAME> "
+
+fi
+echo "Filename is: $FILENAME"
+count=0
+
+declare -a ARRAY=( `cat $FILENAME` )
+
+ARRAY=($(<$FILENAME))
+
+counter=0
+#srm $4
+echo "MAKE SURE YOU TRANSPOSE THIS MATRIX BEFORE USING IT!!!" >> $4
+
+
+for i in $( seq 1 $2 )
+do
+    for j in $( seq 1 $3  )
+    do
+	echo  -en "${ARRAY[ $counter ]} \t" >> $4
+	counter=$(( counter + 1 ))
+    done
+    echo " " >> $4
+
+done
+
+echo "$TEMP"

@@ -1,0 +1,13 @@
+#!/bin/bash
+for FILE in $( ls $1* );
+do
+
+MEAN=$( fslstats $FILE -M )
+echo "$FILE is: $MEAN "
+done
+
+for FILE in $( ls $1* ) ;
+do
+MEAN=$( fslstats $FILE -M )
+echo "$MEAN"
+done

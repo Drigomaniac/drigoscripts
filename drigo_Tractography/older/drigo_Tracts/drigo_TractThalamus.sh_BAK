@@ -1,0 +1,120 @@
+#!/bin/bash
+
+#Rodrigo Perea
+#rperea@kumc.edu (alternative email grandrigo@gmail.com)
+#PLEASE ADD DESCRIPTION HERE:!!!!!!
+#
+#
+#THIS SCRIPT WAS CREATED UNDER bash version 3.2 unders OSX 10.7. To check your bash version,
+#enter bash --version
+#Any questions please feel free to contact me at the email provided above.
+
+
+SOURCE=$( pwd )
+
+#Checking what you are doing.....
+if  [ $1 = "--help" ] ; then
+    echo "Instructions to be entered here....
+\$1 should be the start of the HSC number...
+"
+    exit
+fi
+
+
+
+for DIR in  $(ls -d $1* ) ;
+do
+    DIRtemp=$(basename $DIR)
+    DIRA=${DIRtemp/.bedpostX}
+    #This will create a directory called ... into each folder
+    TT='THAL_TRAC'
+
+
+###ALL THIS IS PRE-PROCESSING BEORE TRACTROGRAPHY
+###I JUST COPIED THE SEGMENTATIONS FROM FS AND NODIF BRAIN AND PUT THEM INTO
+###STANDARD SPACE
+    echo "In directory $DIR"
+    echo "Copying data.nii.gz from bedpost_in to bedpostX..."
+
+    #Copying the nodif_brain form previous bedpostx directory
+   cp $SOURCE/../BEDPOSTx_in/$DIRA/data.nii.gz $DIR/nodif_brain.nii.gz
+
+    echo  "Converting FS brain and aseg_aparc to NIFTII.."
+    #converting th *.mgz images to niftii gzipped format (nii.gz)
+    mri_convert ../FSs/${DIRA}_FS/mri/brain.mgz $DIR/FS_btemp.nii.gz
+    mri_convert ../FSs/${DIRA}_FS/mri/aparc+aseg.mgz $DIR/FS_aatemp.nii.gz
+
+   echo "Reorienting $DIRA brain and apar_aseg"
+   #reorienting the copied images from FS
+   fslreorient2std $DIR/FS_btemp.nii.gz $DIR/FS_brain.nii.gz
+   fslreorient2std $DIR/FS_aatemp.nii.gz $DIR/FS_aparc_aseg.nii.gz
+#"
+
+
+
+
+###############################
+#NOW TIME FOR MASKING OUR REGIONS THAT WILL GO INTO OUR TRACTOGRAPHY
+   mkdir -p $DIR/$TT
+    #Values are:
+    #49 --> R-Thalamus, 10 --> L-Thalamus
+    #1006 --> L-Enthorinal 2006 --> R-Enthorinnal
+    #1/2.008 -->InfParietal, 1/2.009-->Inf.Temp
+    #1/2.011 -->LatOcci, 1/2.12-->LatOrbFrontal
+    #1/2.028 -->SupFron, 1/2.029 -->SupParietal
+   
+    
+    fslmaths $DIR/FS_aparc_aseg.nii.gz -thr 10 -uthr 10 $DIR/$TT/L-Thal
+    fslmaths $DIR/FS_aparc_aseg.nii.gz -thr 49 -uthr 49 $DIR/$TT/R-Thal
+    fslmaths $DIR/FS_aparc_aseg.nii.gz -thr 1006 -uthr 1006 $DIR/$TT/L-EntRih
+    fslmaths $DIR/FS_aparc_aseg.nii.gz -thr 2006 -uthr 2006 $DIR/$TT/R-EntRih
+    fslmaths $DIR/FS_aparc_aseg.nii.gz -thr 1008 -uthr 1008 $DIR/$TT/L-InfPar
+    fslmaths $DIR/FS_aparc_aseg.nii.gz -thr 2008 -uthr 2008 $DIR/$TT/R-InfPar
+    fslmaths $DIR/FS_aparc_aseg.nii.gz -thr 1009 -uthr 1009 $DIR/$TT/L-InfTemp
+    fslmaths $DIR/FS_aparc_aseg.nii.gz -thr 2009 -uthr 2009 $DIR/$TT/R-InfTemp
+    fslmaths $DIR/FS_aparc_aseg.nii.gz -thr 1011 -uthr 1011 $DIR/$TT/L-LatOcci
+    fslmaths $DIR/FS_aparc_aseg.nii.gz -thr 2011 -uthr 2011 $DIR/$TT/R-LatOcci
+    fslmaths $DIR/FS_aparc_aseg.nii.gz -thr 1012 -uthr 1012 $DIR/$TT/L-LatOrbFr
+    fslmaths $DIR/FS_aparc_aseg.nii.gz -thr 2012 -uthr 2012 $DIR/$TT/R-LatOrbFr
+    fslmaths $DIR/FS_aparc_aseg.nii.gz -thr 1028 -uthr 1028 $DIR/$TT/L-SupFr
+    fslmaths $DIR/FS_aparc_aseg.nii.gz -thr 2028 -uthr 2028 $DIR/$TT/R-SupFr
+    fslmaths $DIR/FS_aparc_aseg.nii.gz -thr 1029 -uthr 1029 $DIR/$TT/L-SupPar
+    fslmaths $DIR/FS_aparc_aseg.nii.gz -thr 2029 -uthr 2029 $DIR/$TT/R-SupPar
+    fslmaths $DIR/FS_aparc_aseg.nii.gz -thr 1022 -uthr 1022 $DIR/$TT/L-PostCentral
+   fslmaths $DIR/FS_aparc_aseg.nii.gz -thr 2022 -uthr 2022 $DIR/$TT/R-PostCentral
+    fslmaths $DIR/FS_aparc_aseg.nii.gz -thr 1024 -uthr 1024 $DIR/$TT/L-PreCentral
+    fslmaths $DIR/FS_aparc_aseg.nii.gz -thr 2024 -uthr 2024 $DIR/$TT/R-PreCentral
+
+
+   #########Creating the registration models on each directory
+
+   flirt -in $DIR/nodif_brain -ref $DIR/FS_brain -omat $DIR/xfms/diff2str.mat -searchrx -90 90 -searchry -90 90 -searchrz -90 90 -dof 6 -cost corratio 
+   
+   convert_xfm  -omat $DIR/xfms/str2diff.mat -inverse $DIR/xfms/diff2str.mat
+  # mkdir -p $DIR/R-Thalamus-Tract
+   mkdir -p $DIR/L-Thalamus-Tract
+
+
+
+
+#############Create target masks necessary for tracking
+#
+#
+#
+############RUN FROM HPC SERVER!!!!!
+#
+#
+#
+
+   for target in $(ls  $DIR/THAL_TRAC/L-* ) ; 
+  
+   do
+       
+       if [ $(basename $target) != "L-Thal.nii.gz" ]; then
+       echo "$SOURCE/$target" >> $DIR/L-Thalamus-Tract/targets.txt
+#	   echo "$( basename   $target)"
+      fi
+   done
+
+
+done

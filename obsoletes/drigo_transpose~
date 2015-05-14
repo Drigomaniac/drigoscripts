@@ -1,0 +1,21 @@
+#!/bin/bash
+
+data=$1
+tmpdata=transpose_${data}
+num=$(awk -F"," 'NR==1 { print NF }' $data)
+print $num
+
+i=1
+while (( $i <= $num ))
+do
+newline=''
+echo "In line columm $i "
+for val in $(cut -d"," -f$i $data)
+do
+newline=$newline$val","
+done
+nline=`print ${newline%?}`
+print $nline >> $tmpdata
+(( i = i + 1 ))
+done
+mv tmpdata $transpose_{data}

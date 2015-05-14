@@ -1,0 +1,35 @@
+#!/bin/bash
+#Rodrigo Perea
+#Goal: This script takes * (e.g. RD) normalized maps in an all_*.nii.gz (all_RD.nii.gz) generally coming from tbss_4 4D volume and change the names to a parent */ (e.g. ../RD/) directory.
+
+
+counter=1
+
+declare -a NAME=( MiddleCerebellarPeduncle_ Pontine_crossing_tract_(a_part_of_MCP)_ Genu_of_corpus_callosum_ Body_of_corpus_callosum_ Splenium_of_corpus_callosum_ Fornix_(column_and_body_of_fornix)_ Corticospinal_tract_R_ Corticospinal_tract_L_ Medial_lemniscus_R_ Medial_lemniscus_L_ Inferior_cerebellar_peduncle_R_ Inferior_cerebellar_peduncle_L_ Superior_cerebellar_peduncle_R_ Superior_cerebellar_peduncle_L_ Cerebral_peduncle_R_ Cerebral_peduncle_L_ Anterior_limb_of_internal_capsule_R_ Anterior_limb_of_internal_capsule_L_ Posterior_limb_of_internal_capsule_R_ Posterior_limb_of_internal_capsule_L_ Retrolenticular_part_of_internal_capsule_R_ Retrolenticular_part_of_internal_capsule_L_ Anterior_corona_radiata_R_ Anterior_corona_radiata_L_ Superior_corona_radiata_R_ Superior_corona_radiata_L_ Posterior_corona_radiata_R_ Posterior_corona_radiata_L_ Posterior_thalamic_radiation_(include_optic_radiation)_R_ Posterior_thalamic_radiation_(include_optic_radiation)_L_ Sagittal_stratum_(include_inferior_longitidinal_fasciculus_and_inferior_fronto-occipital_fasciculus)_R_ Sagittal_stratum_(include_inferior_longitidinal_fasciculus_and_inferior_fronto-occipital_fasciculus)_L_ External_capsule_R_ External_capsule_L_ Cingulum_(cingulate_gyrus)_R_ Cingulum_(cingulate_gyrus)_L_ Cingulum_(hippocampus)_R_ Cingulum_(hippocampus)_L_ Fornix_(cres)_/_Stria_terminalis_(can_not_be_resolved_with_current_resolution)_R_ Fornix_(cres)_/_Stria_terminalis_(can_not_be_resolved_with_current_resolution)_L_ Superior_longitudinal_fasciculus_R_ Superior_longitudinal_fasciculus_L_ Superior_fronto-occipital_fasciculus_(could_be_a_part_of_anterior_internal_capsule)_R_ Superior_fronto-occipital_fasciculus_(could_be_a_part_of_anterior_internal_capsule)_L_ Uncinate_fasciculus_R_ Uncinate_fasciculus_L_ Tapetum_R_ Tapetum_L_  )
+
+
+
+
+while [ $counter -le 48 ] 
+do
+
+#fslmaths 
+    echo " $FILE will be changed with  ${array[ $counter ]} "
+    
+TRACT=${NAME[ $(($counter-1 ))]}
+    
+echo "Counter is: $counter and NAME is: $TRACT ] } "
+#fslmaths JHU-ICBM-tracts-maxprob-thr25-1mm.nii.gz -thr $counter -uthr $counter $TRACT
+#fslmaths $1 -thr $counter -uthr $counter $TRACT
+#fslmaths $TRACT -div $(($counter)) mask_${TRACT}
+
+
+counter=$(($counter + 1 ))
+
+
+
+
+
+
+done
+

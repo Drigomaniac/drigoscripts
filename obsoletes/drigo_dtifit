@@ -1,0 +1,33 @@
+#!/bin/bash
+
+#Rodrigo Perea
+#rperea@kumc.edu (alternative email grandrigo@gmail.com)
+#PLEASE ADD DESCRIPTION HERE:!!!!!!
+#
+#
+#THIS SCRIPT WAS CREATED UNDER bash version 3.2 unders OSX 10.7. To check your bash version,
+#enter bash --version
+#Any questions please feel free to contact me at the email provided above.
+
+
+SOURCE=$( pwd )
+
+#Checking what you are doing.....
+#if  [ $1 = "--help" ] ; then
+#    echo "to run tiInstructions enter here...."
+#    exit
+#fi
+
+
+for FILE in $( ls *DTIec.nii.gz )
+do
+    echo "in $FILE ... "
+    FMASK=${FILE/_DTIec.nii.gz}
+    FMASK=${FMASK}_bet
+    FOUT=${FILE/_DTIec.nii.gz}
+    
+#    fslreorient2std $FILE $FILE
+#     bet $FILE $FMASK  -m -f 0.25
+ dtifit -k $FILE -o ${FILE/_DTIec.nii.gz} -m ${FMASK}_mask.nii.gz -r $1 -b $2 
+
+done

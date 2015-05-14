@@ -1,0 +1,29 @@
+#!/bin/bash
+echo " ...
+...
+$\1 is repository name (created in the github website)
+$\2 is Commit comment (or title, I think). 
+...
+..."
+
+
+echo "# $1 >> README.md
+git init
+git add README.md
+git commit -m $2
+git remote add origin https://github.com/Drigomaniac/${1}
+git push -u origin master
+.
+.
+.
+"
+
+
+
+
+echo "# $1" >> README.md
+git init
+git add README.md
+git commit -m \"$2\"
+git remote add origin https://github.com/Drigomaniac/${1}.git
+git push -u origin master

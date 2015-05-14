@@ -1,0 +1,65 @@
+#!/bin/bash
+
+#Rodrigo Perea
+#rperea@kumc.edu (alternative email grandrigo@gmail.com)
+#PLEASE ADD DESCRIPTION HERE:!!!!!!
+#
+#
+#THIS SCRIPT WAS CREATED UNDER bash version 3.2 unders OSX 10.7. To check your bash version,
+#enter bash --version
+#Any questions please feel free to contact me at the email provided above.
+
+
+pwd=SOURCE
+
+#Checking what you are doing.....
+if  [ $1 = "--help" ] ; then
+    echo "to run tiInstructions enter here...."
+    exit
+fi
+
+################################################
+#USEFULE SCRIPTS....
+#FOR LOOPS
+
+#for FILE in $( ls  $SOURCE*$2*); 
+# do
+#    echo $FILE
+#done
+
+
+#IF STATEMENTS
+#if [ something == ?? ] ; then
+#elif 
+#else
+#fi
+
+#DECLARING ARRAYS
+# declare -a ARRAY=( s f g fdw da fd s )
+
+
+#COUNTER AND COUNTER++
+#counter=1
+#counter=((counter++))
+
+
+
+#To bring $1 as array:
+#for FILES in "$@" ; do
+#<SOMETHING>
+#done
+
+
+#REMOVE ALPHANUMERICAL VALUES
+#and "."
+#FILE=$( ls $FILES | tr -d [:alpha:] )
+#SBNAME=${FILE//.}
+
+
+
+#AWK to check all markes exist....
+#$ awk '{
+#if ($3 =="" || $4 == "" || $5 == "")
+#	print "Some score for the student",$1,"is missing";'}' student-marks
+
+##################################################

@@ -1,0 +1,12 @@
+#!/bin/bash
+
+ for FILE in  $( ls *DTIec.nii.gz ); 
+ do
+ FILER=${FILE//_DTIec.nii.gz}
+ echo "In $FILER ... "
+ mkdir -p $FILER
+ cp $FILE $FILER/data.nii.gz
+ cp $FILER*bval $FILER/bvals
+ cp $FILER*bvec $FILER/bvecs
+ cp $FILER*bet_mask.nii.gz $FILER/nodif_brain_mask.nii.gz 
+done			     

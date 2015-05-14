@@ -1,0 +1,56 @@
+#!/bin/bash
+#Rodrigo Perea
+#Goal: This script takes * (e.g. RD) normalized maps in an all_*.nii.gz (all_RD.nii.gz) generally coming from tbss_4 4D volume and gives mean values for the specific atlas regions from JHU. 
+#TO RUN
+#  $drigo_JHUmeans.sh all_smRD.nii.gz <either '25' or 'labels' depending on the trac you want to use>
+
+
+
+SOURCE=$( pwd )
+
+#if [ $1 -z ] ; then
+#    echo "Error.
+#Input the image you want to retrieve the mean values as the first argument. (e.g. drigo_JHUmeans all_smFA.nii.gz )"
+#    exit
+#fi
+
+
+#Variables to initialize
+IMAGE=$1
+#TEMP=$3
+
+
+#echo "Where are the tracts located (if in /BRAIN/ATLAS_DTI/masks_thr25_1mm  hit enter) ?"
+#read -e TRACTDIR
+#TRACTDIR="/BRAIN/ATLAS_DTI/mask_JHU_ICBM_labels_1mm"
+
+
+#if [ $TRACTDIR -z ]; then
+#    TRACTDIR="/BRAIN/ATLAS_DTI/masks_thr25_1mm"
+#fi
+
+
+
+#echo "What is the prefix of the tracts (if mask_thr25_1mm_ , hit enter)? "
+#read -e TRACTPREFIX
+#TRACTPREFIX="mask_JHU_ICBM_labels"
+
+#if [ $TRACTPREFIX -z ] ; then
+#    TRACTPREFIX="mask_thr25_1mm_"
+#fi
+COUNTER=0
+
+    declare -a TRACACRO=( T1_11969_001_01_FA.nii.gz T1_11969_003_01_FA.nii.gz T1_11969_005_01_FA.nii.gz T1_11969_007_01_FA.nii.gz T1_11969_008_01_FA.nii.gz T1_11969_009_01_FA.nii.gz T1_11969_011_01_FA.nii.gz T1_11969_012_01_FA.nii.gz T1_11969_014_01_FA.nii.gz T1_11969_016_01_FA.nii.gz T1_11969_017_01_FA.nii.gz T1_11969_018_01_FA.nii.gz T1_11969_019_01_FA.nii.gz T1_11969_021_01_FA.nii.gz T1_11969_022_01_FA.nii.gz T1_11969_023_01_FA.nii.gz T1_11969_024_01_FA.nii.gz T1_11969_025_01_FA.nii.gz T1_11969_027_01_FA.nii.gz T1_11969_028_01_FA.nii.gz T1_11969_030_01_FA.nii.gz T1_11969_031_01_FA.nii.gz T1_11969_033_01_FA.nii.gz T1_11969_034_01_FA.nii.gz T1_11969_036_01_FA.nii.gz T1_11969_037_01_FA.nii.gz T1_11969_039_01_FA.nii.gz T1_11969_043_01_FA.nii.gz T1_11969_047_01_FA.nii.gz T1_11969_048_01_FA.nii.gz T1_11969_050_01_FA.nii.gz T1_11969_052_01_FA.nii.gz T3_11969_001_03_FA.nii.gz T3_11969_003_03_FA.nii.gz T3_11969_005_03_FA.nii.gz T3_11969_007_03_FA.nii.gz T3_11969_008_03_FA.nii.gz T3_11969_009_03_FA.nii.gz T3_11969_011_03_FA.nii.gz T3_11969_012_03_FA.nii.gz T3_11969_014_03_FA.nii.gz T3_11969_016_03_FA.nii.gz T3_11969_017_03_FA.nii.gz T3_11969_018_03_FA.nii.gz T3_11969_019_03_FA.nii.gz T3_11969_021_03_FA.nii.gz T3_11969_022_03_FA.nii.gz T3_11969_023_03_FA.nii.gz T3_11969_024_03_FA.nii.gz T3_11969_025_03_FA.nii.gz T3_11969_027_03_FA.nii.gz T3_11969_028_03_FA.nii.gz T3_11969_030_03_FA.nii.gz T3_11969_031_03_FA.nii.gz T3_11969_033_03_FA.nii.gz T3_11969_034_03_FA.nii.gz T3_11969_036_03_FA.nii.gz T3_11969_037_03_FA.nii.gz T3_11969_039_03_FA.nii.gz T3_11969_043_03_FA.nii.gz T3_11969_047_03_FA.nii.gz T3_11969_048_03_FA.nii.gz T3_11969_050_03_FA.nii.gz T3_11969_052_03_FA.nii.gz )
+
+    for FILE in $( ls ./vol* ) 
+    do
+	VOL=${TRACACRO[ $COUNTER ]}
+	VOL=${VOL/\.nii.gz}
+	VOL=${VOL}_MD.nii.gz
+    echo "Vol $FILE is $VOL and counter $COUNTER "
+    let COUNTER=COUNTER+1
+    mv $FILE $VOL
+   
+#"
+
+    done

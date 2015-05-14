@@ -1,0 +1,2 @@
+#!/bin/bash
+fslview  /usr/local/fsl/data/standard/FMRIB58_FA_1mm.nii.gz mean_FA_skeleton_mask.nii.gz -l Green tbss*FA*tfce_corrp_tstat$1.nii.gz -b 0.95,1 -l Red-Yellow tbss*MD*_tfce_corrp_tstat$2.nii.gz -b 0.95,1 -l Blue-Lightblue  &

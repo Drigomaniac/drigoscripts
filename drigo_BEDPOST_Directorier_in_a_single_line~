@@ -1,0 +1,23 @@
+ for FILE in  ; do TER=11883_104_01; mkdir 11883_104_01 ; mv 11883_104_01.bval 11883_104_01/bvals ; mv 11883_104_01.bvec 11883_104_01/bvecs ; mv 11883_104_01_DTIec.nii.gz 11883_104_01/data.nii.gz ; mv 11883_104_01_bet.nii.gz 11883_104_01/nodif_brain.nii.gz ; mv 11883_104_01_bet_mask.nii.gz 11883_104_01/nodif_brain_mask.nii.gz  ; done
+ for FILE in 11883_087_01.bval
+11883_087_02.bval
+11883_089_01.bval
+11883_089_02.bval
+11883_090_01.bval
+11883_090_02.bval
+11883_092_01.bval
+11883_092_02.bval
+11883_093_01.bval
+11883_093_02.bval
+11883_099_01.bval
+11883_099_02.bval
+11883_116_01.bval
+11883_116_02.bval
+11883_118_01.bval
+11883_118_02.bval
+11883_122_01.bval
+11883_122_02.bval
+11883_126_01.bval
+11883_126_02.bval
+11883_127_01.bval
+11883_127_02.bval ; do TER=11883_104_01; mkdir 11883_104_01 ; mv 11883_104_01.bval 11883_104_01/bvals ; mv 11883_104_01.bvec 11883_104_01/bvecs ; mv 11883_104_01_DTIec.nii.gz 11883_104_01/data.nii.gz ; mv 11883_104_01_bet.nii.gz 11883_104_01/nodif_brain.nii.gz ; mv 11883_104_01_bet_mask.nii.gz 11883_104_01/nodif_brain_mask.nii.gz  ; done

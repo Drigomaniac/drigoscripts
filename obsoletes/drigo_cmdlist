@@ -1,0 +1,97 @@
+#!/bin/bash
+SOURCE=$( pwd )
+
+if [ $1 = "--help" ]; then
+    echo " -beg to add a prefix and then command ( drigo_cmdlist -beg 11420_ fslview file <aditional command if needed>
+-end to add suffix and then command ( drigo_cmdlist -end *.nii fslview file <aditional command if needed>
+OR simply (for no suffix or prefix):
+drigo_cmdlist fslview <ADDITIONAL COMMAND>> <files>
+
+OR -reor for a simplified fslreorient2std script
+
+
+"
+#Instructions for fslstats -R
+elif [ $1 = '-beg' ]; then
+    for FILE in $( ls $SOURCE/$3 );
+    do
+	echo "       $2 $FILE "
+	$2 $FILE
+    done
+    
+#If flag  is at the end
+elif [ $1 = '-end' ]; then
+    for FILE in $( ls $SOURCE/*$3 );
+    do
+	echo "Doing...  $2 $FILE "
+	$2 $FILE
+    done
+
+
+
+#if flag is at the end and beginning
+elif [ $1 = '-endbeg' ]; then
+    for FILE in $( ls $SOURCE/11*$3 ) ;
+    do 	
+	echo " doing on $2 $FILE ...."
+	$2 $FILE
+    done
+#Script made for fslreorient2std....
+elif [ $1 = '-reor' ]; then
+    for FILE in $( ls $SOURCE/* );
+    do
+	echo "fslreorient2std $( basename $FILE )..."
+	fslreorient2std $FILE $FILE
+    done
+#_____
+
+
+elif [ $1 = '-none' ]; then
+
+    for FILE in $( ls $SOURCE/ );
+    do
+	echo "Operation...$1 $2 $FILE...  "
+	$2 $FILE $3
+    done
+    
+
+
+elif [ $1 = 'fslstats' ] ; then
+    for FILE in $( ls $SOURCE/*.nii.gz ) ;
+    do
+	echo  "For $( basename $FILE )"  
+	fslstats  $2 -R 	
+    done
+
+elif [ $1 = 'dtifit' ] ; then
+    for FILE in $( ls $SOURCE/*$2* ) ;
+    do
+	echo "In File $FILE  "
+	dtifit -k $FILE -o ${FILE/_DTIec.nii.gz} -m ${FILE/DTIec.nii.gz}bet_mask.nii.gz -r bvecs -b bvals
+    done
+
+elif [ $1 = 'fslinfo' ] ; then
+for FILE in $( ls $SOURCE/$2 ) ;
+do	
+echo "In file $FILE..."	
+fslinfo $FILE    
+done		
+#If instruction is at the beginning.....
+
+
+
+elif [ $1 = 'bet2' ] ; then
+for FILE in $( ls $SOURCE/$2 ) ;
+do
+	
+echo "In file $FILE ..."
+bet2 $FILE ${FILE/DTIec.nii.gz}bet -m -f 0.3
+done
+
+
+else
+
+
+echo "If no choice, please enter --help"
+
+fi

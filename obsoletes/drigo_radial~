@@ -1,0 +1,10 @@
+#!/bin/bash
+
+
+for FILE in $( ls  *L1* );
+do
+	#fslmaths L2_image -add L3_image -div 2 L23	
+
+echo "$FILE"
+
+done

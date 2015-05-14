@@ -1,0 +1,5 @@
+#!/bin/bash
+for FILE in $( ls $1 );
+do
+fslstats $FILE -M
+done

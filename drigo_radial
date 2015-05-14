@@ -1,0 +1,11 @@
+#!/bin/bash
+
+
+for FILE in $( ls  *L2* );
+do
+	#fslmaths L2_image -add L3_image -div 2 L23	
+
+FILEB=${FILE/L2/L3}
+echo "$FILE $FILEB"
+fslmaths $FILE -add $FILEB -div 2 ${FILE/L2/RD}
+done

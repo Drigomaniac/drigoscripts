@@ -1,0 +1,31 @@
+#!/bin/bash
+
+#Rodrigo Perea
+#rperea@kumc.edu (alternative email grandrigo@gmail.com)
+#Step 0. Preprocessing
+#Copying the necessary bedpost_in files (data, nodif_brain) to the bedpost_out
+#folders
+#THIS SCRIPT WAS CREATED UNDER bash version 3.2 unders OSX 10.7. To check your bash version,
+#enter bash --version
+#Any questions please feel free to contact me at the email provided above.
+
+
+#---> This script might not work if slight modifications are not given due
+#     to folder specific locations...
+
+
+for DIR in  $(ls -d $1* ) ;
+do
+    DIRtemp=$(basename $DIR)
+    
+###ALL THIS IS PRE-PROCESSING BEORE TRACTROGRAPHY
+###I JUST COPIED THE SEGMENTATIONS FROM FS AND NODIF BRAIN AND PUT THEM INTO
+###STANDARD SPACE
+    echo "In directory $DIR"
+    echo "Copying data.nii.gz from bedpost_in to bedpostX..."
+    
+    #Copying the nodif_brain form previous bedpostx directory
+    cp $SOURCE/../BEDPOSTx_in/$DIRA/data.nii.gz $DIR/nodif_brain.nii.gz
+
+
+done

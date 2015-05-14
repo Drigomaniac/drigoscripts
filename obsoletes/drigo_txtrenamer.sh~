@@ -1,0 +1,46 @@
+#!/bin/bash
+DIR=$( pwd )
+
+# Load text file lines into a bash array.
+
+#Setting IDs into th eID array...
+OLD_IFS=$IFS
+IFS=$' \n'
+ID=( $(cat "./ID.txt") )
+IFS=$OLD_IFS
+
+
+#Setting MAP IDs into th eID array...
+OLD_IFS=$IFS
+IFS=$' \n'
+MAP=( $(cat "./MAP.txt") )
+IFS=$OLD_IFS
+
+
+#Setting Timepoints into th eID array...
+OLD_IFS=$IFS
+IFS=$' \n'
+Timepoint=( $(cat "./Timepoint.txt") )
+IFS=$OLD_IFS
+
+
+#Print each line in the array
+#echo "${lines_ary[757]}" 
+
+
+
+ #How to add counter strings...
+COUNTER=0
+
+#Check size of the array
+#LENGTH=$( cat 'MAP.txt' | wc -l )
+
+
+while [ $COUNTER -lt 323 ]; do
+    echo "Copying ${ID[$COUNTER]} to USABLE..."
+   #cp ../AC_PCed/${ID[$COUNTER]}* ./
+ #   echo $COUNTER
+    mv ${ID[$COUNTER]}-MPRAGE.nii WU_${MAP[$COUNTER]}_${Timepoint[$COUNTER]}_MPRAGE.nii 
+
+  let COUNTER=COUNTER+1
+done

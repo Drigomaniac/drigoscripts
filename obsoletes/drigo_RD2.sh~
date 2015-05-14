@@ -1,0 +1,17 @@
+#!/bin/bash
+#Rodrigo Perea
+#Goal: This script takes * (e.g. RD) normalized maps in an all_*.nii.gz (all_RD.nii.gz) generally coming from tbss_4 4D volume and change the names to a parent */ (e.g. ../RD/) directory.
+
+
+fslsplit all_*$1*
+counter=1
+
+array=( ) 
+for FILE in *L2*
+
+do
+
+echo " $FILE will be changed with "../$1/" $array[$counter] "
+counter=$(($counter + 1 ))
+done
+

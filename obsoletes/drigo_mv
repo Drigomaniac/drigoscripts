@@ -1,0 +1,60 @@
+#!/bin/bash
+
+#Rodrigo Perea
+#rperea@kumc.edu (alternative email grandrigo@gmail.com)
+#PLEASE ADD DESCRIPTION HERE:!!!!!!
+#
+#
+#THIS SCRIPT WAS CREATED UNDER bash version 3.2 unders OSX 10.7. To check your bash version,
+#enter bash --version
+#Any questions please feel free to contact me at the email provided above.
+
+
+SOURCE=$( pwd )
+
+for FILE in 1001   1004   1008   1012   1015   1021   1024   1026   1027   1028   1029   1030   1032   1033   1036   1037   1039   1040   1046   1048   1049   1052   1053   1056   1059   1060   1064   1069   1071   1074   1075   1077   1080   1082   1086   1087   1090   1091   1092   1093   1095   1096   1097   1102   1104   1106   1107   1108   1112   1116   1118   1123   1125 ; 
+ do
+    
+mv *$FILE* Suc/
+done
+
+
+#IF STATEMENTS
+#if [ something == ?? ] ; then
+#elif 
+#else
+#fi
+
+#DECLARING ARRAYS
+# declare -a ARRAY=( s f g fdw da fd s )
+#To access the array:
+#Something=${ARRAY[ $counter ]}
+
+#TO CHECK ARRAY LENGTH
+#length=${#ARRA[@]}
+
+#COUNTER AND COUNTER++
+#counter=1
+#counter=((counter++))
+
+
+
+#To bring $1 as array:
+#for FILES in "$@" ; do
+#<SOMETHING>
+#done
+
+
+#REMOVE ALPHANUMERICAL VALUES
+#and "."
+#FILE=$( ls $FILES | tr -d [:alpha:] )
+#SBNAME=${FILE//.}
+
+
+
+#AWK to check all markes exist....
+#$ awk '{
+#if ($3 =="" || $4 == "" || $5 == "")
+#	print "Some score for the student",$1,"is missing";'}' student-marks
+
+##################################################

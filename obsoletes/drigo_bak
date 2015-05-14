@@ -1,0 +1,11 @@
+#!/bin/bash
+
+PWD=$( pwd )
+DATEs=$( date +%Y%m%d )
+BAKDIR=/BRAIN/ZZ_OTHER_FILES/Drigo_Scripts
+cp $PWD/$1 $BAKDIR
+mv $BAKDIR/$1 $BAKDIR/$DATEs"_"$1
+echo "Moving $1 to $BAKDIR and appending $DATEs "
+echo "Commands executed: cp $PWD/$1 $BAKDIR
+mv $BAKDIR/$1 $BAKDIR/$DATEs'_'$1 " 
+ 

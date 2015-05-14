@@ -1,0 +1,57 @@
+#!/bin/bash
+#Rodrigo Perea
+#Goal: Type --help or check the help if statement 
+#TO RUN
+#  $drigo_JHUmeans.sh all_smRD.nii.gz <either '25' or 'labels' depending on the trac you want to use>
+
+
+
+SOURCE=$( pwd )
+#Variables to initialize
+IMAGE=$1
+
+
+if [ $1 -eq "--help" ] ; 
+then
+    echo "Enter FA/RD as the first argument and run it from ../stats present directory"
+    echo "This script will:
+     1. Create a $\1_FA (e.g. FA_TOI) folder
+     2. Copy the all_FA.nii.gz into FA_folder
+    
+"
+exit
+fi
+
+
+
+
+declare -a TRACACRO=( ATR-L ATR-R BodyCC CingCG-L CingCG-R CingH-L CingH-R CST-L CST-R FMa FMi GenuCC IFOF-L IFOF-R  ILF-L ILF-R SLF-L SLF-R SpleniumCC UF-L UF-R )
+    
+
+TRACTDIR="/BRAIN/ATLAS_DTI/masks_thr25_1mm"
+    TRACTPREFIX="mask_thr25_1mm_"
+    
+    
+    for TRACT in $( ls $TRACTDIR/$TRACTPREFIX* ) 
+    do    
+	TRACRO=tract_25_1mm_${TRACACRO[ $counter ]}
+	TCNAME=$( basename $TRACT )
+	TCNAME=${TCNAME/.nii.gz}
+	TCNAME=${TCNAME/mask_thr25_1mm_/means_thr25_1mm_}
+#	TCNAME=thr25_1mm_${TCNAME}
+	counter=$(($counter+1))
+
+#echo "
+	if [ -a means_${TRACRO}.txt ] ; 
+	then
+	    echo "Skipped tract. Remove to proceed: means_${TRACRO}.txt"
+	else
+	    echo "For file in $1 in tract $TCNAME..."
+	    fslmaths $IMAGE -mul $TRACT $TRACRO
+		fslstats -t $TRACRO -M >> means_${TRACRO}.txt
+		cat means_${TRACRO}.txt
+		
+	fi
+#"
+    done
+

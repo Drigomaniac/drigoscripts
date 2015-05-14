@@ -1,0 +1,27 @@
+#!/bin/bash
+
+SOURCE=$( pwd )
+cd $SOURCE
+for FILE in *DTIec.nii.gz 
+do
+
+#echo "Doing  bet  $FILE ${FILE/.nii.gz}_bet -m" 
+#bet $FILE ${FILE/.nii.gz}_bet -m -f 0.3
+
+
+#eddy_correct $FILE ${FILE}_ec 0 
+echo "Doing dtifit -k $FILE -o $FILE -m  ${FILE/.nii.gz}_bet_mask -r bvecsNew -b bvalsNew "
+if [ $1 =  'old' ] ; then
+BVEC=bvecs
+BAL=bvals
+elif [ $1 =  'new' ]  then
+BVEC=bvecsNew
+BVAL=bvalsNew
+else
+echo "Error, input whtehr bvecs/bvlas are old or new"
+exit
+fi
+
+dtifit -k $FILE -o ${FILE/.nii.gz} -m ${FILE/.nii.gz}_bet_mask -r bvecsNew -b bvalsNew
+
+done

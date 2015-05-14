@@ -1,0 +1,46 @@
+#!/bin/bash
+#set -xv
+
+#Rodrigo Perea
+#rperea@kumc.edu (alternative email grandrigo@gmail.com)
+#This will take a 1 column of numbers and split it in N x N columns
+
+if [ $1 == "--help" ] ; then
+echo "First argument should be the textfile or csv you want to split.
+Second argument should be the number of collumns and 
+Third will be the output file"
+
+fi
+cnt=0
+col=$2
+out=$3
+
+for num in $( cat $1 )
+do
+    ((cnt++))
+    if (( $cnt == 1 ))
+    then
+        out=$num
+    else
+#This is for comma characters: 
+#       out=${out},${num}
+    #    tabs :
+  out=${out}'\t'${num}
+    fi
+
+    if (( $cnt == $col ))
+    then
+        # tabs :
+	echo -e $out >> $3
+        #commas:
+	#echo $out
+        cnt=0
+    fi
+done
+
+# leftovers, if any
+if (( $cnt != 0 ))
+then
+    # tabs : echo -e $out
+    echo $out >> $3
+fi

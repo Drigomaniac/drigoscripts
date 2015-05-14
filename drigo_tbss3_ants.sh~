@@ -1,0 +1,38 @@
+#!/bin/sh
+
+#   tbss_3_postreg - re-arranged to fit the Ants_tbss registration at KUADC...
+
+mkdir -p ../stats
+Usage() {
+    cat <<EOF
+
+You only need one argument: all_FAAnts (with all the merged ANTs procesed FA/(other diffusion) images...
+    exit 1
+}
+EOF
+
+[ "$1" = "" ] && Usage
+
+
+mkdir -p stats
+
+# create mean FA
+echo "creating valid mask and mean FA"
+$FSLDIR/bin/fslmaths all_FA -max 0 -Tmin -bin mean_FA_mask -odt char
+$FSLDIR/bin/fslmaths all_FA -mas mean_FA_mask all_FA
+$FSLDIR/bin/fslmaths all_FA -Tmean mean_FA
+SKELETON=0
+# create skeleton
+if [ $SKELETON = 0 ] ; then
+    echo "skeletonising mean FA"
+    $FSLDIR/bin/tbss_skeleton -i mean_FA -o mean_FA_skeleton
+else
+    $FSLDIR/bin/fslmaths $FSLDIR/data/standard/FMRIB58_FA_1mm -mas mean_FA_mask mean_FA
+    $FSLDIR/bin/fslmaths mean_FA -bin mean_FA_mask
+    $FSLDIR/bin/fslmaths all_FA -mas mean_FA_mask all_FA
+    $FSLDIR/bin/imcp $FSLDIR/data/standard/FMRIB58_FA-skeleton_1mm mean_FA_skeleton
+fi
+
+echo "now view mean_FA_skeleton to check whether the default threshold of 0.2 needs changing, when running:"
+echo "tbss_4_prestats <threshold>"
+

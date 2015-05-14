@@ -1,0 +1,44 @@
+#!/bin/bash
+
+#Rodrigo Perea
+#rperea@ku.edu
+#Goal: get intensity at specific voxels given as inputs...
+
+#INPUT SHOULD BE IN mm with 190,126,72 as dimensions.
+#DELETE THE ADDITION SECTION IF SPATIAL COORDINATES IS NEEDED OR ADJUST FOR MM
+
+
+
+PWD=$( pwd )
+
+
+
+#echo "Enter a key name prefix the files (e.g. "11969_"):"
+#read KEY
+
+#echo "Enter a suffix for all the file (e.g. (.nii.gz))"
+#read SUFFIX
+
+#echo "Enter X Y Z coordinate:"
+#read X
+#read Y 
+#read Z
+X=12
+Y=-24 
+Z=6
+
+
+#Generating xyz coordinates for FA....
+echo " At position X= $X Y= $Y  Z=$Z " >> intensities.txt
+
+for FILE in $( ls *.nii ); 
+do  
+
+#echo "Filename is: $FILE and intensity is value is "
+PVALUE=$( fslmeants -i $FILE -c $((  0 - $X )) $(( 0 + $Y )) $(( 0 + $Z )) )
+
+
+echo  "$FILE \t  $PVALUE" >> intensities.txt
+
+done
+

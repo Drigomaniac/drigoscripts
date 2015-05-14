@@ -1,0 +1,45 @@
+#!/bin/bash
+
+#Rodrigo Perea
+#rperea@ku.edu
+#Goal: get intensity at specific voxels given as inputs...
+
+#INPUT SHOULD BE IN mm with 190,126,72 as dimensions.
+#DELETE THE ADDITION SECTION IF SPATIAL COORDINATES IS NEEDED OR ADJUST FOR MM
+
+
+
+PWD=$( pwd )
+echo "Spatial coordinate is is: $(( 90 - $1  )) $(( 126 + $2 )) $(( 72 + $3 ))"
+
+
+
+#Generating xyz coordinates for FA....
+for FILE in $( ls *FA*.nii.gz ); 
+do  
+
+#echo "Filename is: $FILE and p value is "
+PVALUE=$( fslmeants -i $FILE -c $((  90 - $1 )) $(( 126 + $2 )) $(( 72 + $3 )) )
+
+
+echo  -n "Filename is: $FILE with nonzero $PVALUE and p-value "
+echo "$PVALUE" | awk '{print 1 - $1 }'
+
+done
+echo ""
+
+
+#Generating xyz coordinates for MD
+for FILE in $( ls *MD*.nii.gz ); 
+do  
+
+#echo "Filename is: $FILE and p value is "
+PVALUE=$( fslmeants -i $FILE -c $((  90 - $1 )) $(( 126 + $2 )) $(( 72 + $3 )) )
+
+
+echo  -n "Filename is: $FILE with nonzero $PVALUE and p-value "
+echo "$PVALUE" | awk '{print 1 - $1 }'
+
+done
+echo ""
+
